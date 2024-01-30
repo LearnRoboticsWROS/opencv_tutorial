@@ -1,0 +1,33 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/learnroboticswros/catkin_ws/devel/include/**",
+        "/opt/ros/noetic/include/**",
+        "/home/learnroboticswros/catkin_ws/src/cobot_2_test/include/**",
+        "/home/learnroboticswros/catkin_ws/src/cobot_test/include/**",
+        "/home/learnroboticswros/catkin_ws/src/cobot_tf/include/**",
+        "/home/learnroboticswros/catkin_ws/src/gazebo-pkgs/gazebo_grasp_plugin/include/**",
+        "/home/learnroboticswros/catkin_ws/src/gazebo-pkgs/gazebo_state_plugins/include/**",
+        "/home/learnroboticswros/catkin_ws/src/gazebo-pkgs/gazebo_test_tools/include/**",
+        "/home/learnroboticswros/catkin_ws/src/gazebo-pkgs/gazebo_version_helpers/include/**",
+        "/home/learnroboticswros/catkin_ws/src/gazebo-pkgs/gazebo_world_plugin_loader/include/**",
+        "/home/learnroboticswros/catkin_ws/src/general-message-pkgs/object_msgs_tools/include/**",
+        "/home/learnroboticswros/catkin_ws/src/robot_7_dof/include/**",
+        "/home/learnroboticswros/catkin_ws/src/roboticsgroup_upatras_gazebo_plugins/include/**",
+        "/home/learnroboticswros/catkin_ws/src/rumba_pathway/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}
