@@ -1,0 +1,4 @@
+<launch>
+    <node pkg="opencv_tutorial" type="color_filtering.py" name="color_filtering"  output="screen">
+    </node>
+</launch>
