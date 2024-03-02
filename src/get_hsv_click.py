@@ -18,7 +18,7 @@ def mouseRGB(event,x,y,flags,param):
         print("Coordinates of pixel: X: ",x,"Y: ",y)
  
 # Read an image, a window and bind the function to window
-img = cv.imread("/home/learnroboticswros/catkin_ws/src/opencv_tutorial/images/output/camera_image.png")
+img = cv.imread("/home/learnroboticswros/catkin_ws/src/opencv_tutorial/images/output/object_new_position.jpg")
 
 cv.namedWindow('mouseRGB')
 cv.setMouseCallback('mouseRGB',mouseRGB)

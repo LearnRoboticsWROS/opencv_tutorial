@@ -51,7 +51,7 @@ class ObjectDetection(object):
                 object_detected.append(cnt)
         
         print("how many object I detect: ", len(object_detected))
-        print(object_detected)
+        #print(object_detected)
 
         for cnt in object_detected:
             rect = cv.minAreaRect(cnt)
