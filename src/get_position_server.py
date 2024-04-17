@@ -4,11 +4,13 @@ import cv2 as cv
 import numpy as np
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
+from position_tracker.srv import GetPosition, GetPositionResponse
 
 class ObjectDetection(object):
     def __init__(self):
         self.image_sub = rospy.Subscriber("/cobot/camera1/image_raw", Image, self.camera_callback)
         self.bridge_object = CvBridge()
+        self.server = rospy.Service("/get_position", GetPosition, self.handle_get_position)
     
     def camera_callback(self, data):
         try:
@@ -65,25 +67,34 @@ class ObjectDetection(object):
             if (x_center > x_pxl_center) and (y_center < y_pxl_center):
                 y = y0 - (x_center-x_pxl_center)/pxl_mm_conversion
                 x = x0+(y_pxl_center - y_center)/pxl_mm_conversion
+                z = z0
             
             #condition bottom right of the imgage
             elif (x_center > x_pxl_center) and (y_center > y_pxl_center):
                 y = y0 - (x_center-x_pxl_center)/pxl_mm_conversion  
                 x = x0 - (y_center - y_pxl_center)/pxl_mm_conversion  
-            
+                z = z0
+
             #condition bottom left of the imgage
             elif (x_center < x_pxl_center) and (y_center > y_pxl_center): 
                 y = y0 + (x_pxl_center-x_center)/pxl_mm_conversion  
                 x = x0 - (y_center - y_pxl_center)/pxl_mm_conversion 
+                z = z0
 
             #condition top left of the imgage
             elif (x_center < x_pxl_center) and (y_center < y_pxl_center):
                 y = y0 + (x_pxl_center-x_center)/pxl_mm_conversion
                 x = x0 + (y_pxl_center - y_center)/pxl_mm_conversion
+                z = z0
 
             elif (x_center == x_pxl_center) and (y_center == y_pxl_center):
                 x= x0
                 y= y0
+                z = z0
+
+            self.x_pos = x
+            self.y_pos = y
+            self.z_pos = z
 
             cv.putText(cv_image, "x: {}".format(round(x, 1)) + " y: {}".format(round(y,1)), (int(x_center), int(y_center)), cv.FONT_HERSHEY_PLAIN, 1, (0,255,0),1)
             cv.circle(cv_image, (int(x_center), int(y_center)), 1, (255,0,0), thickness=-1)
@@ -93,8 +104,15 @@ class ObjectDetection(object):
         cv.imshow("obj detection from red mask world coordinate", cv_image)
         cv.waitKey(1)
 
+    def handle_get_position(self, req):
+        if req:
+            res = GetPositionResponse()
+            res.x_position = self.x_pos
+            res.y_position = self.y_pos
+            res.z_position = self.z_pos
 
-
+            rospy.loginfo("Object position: x = %f, y = %f, z = %f" %(self.x_pos, self.y_pos, self.z_pos))
+        return res
 
 if __name__ == '__main__':
     

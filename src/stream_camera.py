@@ -7,7 +7,7 @@ from cv_bridge import CvBridge, CvBridgeError
 
 class ObjectDetection(object):
     def __init__(self):
-        self.image_sub = rospy.Subscriber("/rgbd_camera/rgb/image_raw", Image, self.camera_callback)
+        self.image_sub = rospy.Subscriber("/cobot/camera1/image_raw", Image, self.camera_callback)
         self.bridge_object = CvBridge()
     
     def camera_callback(self, data):
@@ -50,12 +50,14 @@ class ObjectDetection(object):
                 cnt = cv.approxPolyDP(cnt, 0.03*cv.arcLength(cnt, True), True)
                 object_detected.append(cnt)
         
-        print("how many object I detect: ", len(object_detected))
+        #print("how many object I detect: ", len(object_detected))
         #print(object_detected)
 
         for cnt in object_detected:
             rect = cv.minAreaRect(cnt)
             (x_center, y_center), (w,h), orientation = rect
+            print("width = ", w)
+            print("heigh = ", h)
             box = cv.boxPoints(rect)
             box = np.int0(box)
             cv.polylines(cv_image, [box], True, (255, 0,0),1)
